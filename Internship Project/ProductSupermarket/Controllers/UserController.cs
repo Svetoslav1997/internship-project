@@ -4,16 +4,17 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ProductSupermarket.Entities;
+using ProductSupermarket.Enums;
 using ProductSupermarket.Repositories;
 namespace ProductSupermarket.Controllers{
 	
 	public class UserController:Controller {
 		
 		public ActionResult Index() {
-			List<Users> users = new List<Users>();
-			UserRepository userRepository = new UserRepository();
-			users.AddRange(userRepository.GetAll());
-			return View(users);
+			List<User> users = new List<User>();
+            UserRepository userRepository = new UserRepository();
+            users.AddRange(userRepository.GetAll());
+            return View(users);
 			
 		}
 		[HttpGet]
@@ -27,13 +28,13 @@ namespace ProductSupermarket.Controllers{
 			entity.CreatedAt = DateTime.Now;
 			entity.LastUpdateAt = DateTime.Now;
 			entity.IsActive = false;
-			entity.AccessRights = NormalUser;
+			entity.AccessRights = AccessRightsEnum.NormalUser;
 			
 			
 			var userRepository = new UserRepository();
 			userRepository.Insert(entity);
 			
-			return RedirecToAction("Index");
+			return RedirectToAction("Index");
 		}
 		
 		[HttpGet]
@@ -51,7 +52,7 @@ namespace ProductSupermarket.Controllers{
 			var userRepository = new UserRepository();
 			userRepository.Update(entity);
 			
-			return RedirecToAction("Inedx");
+			return RedirectToAction("Inedx");
 			
 		}
 		
@@ -60,8 +61,38 @@ namespace ProductSupermarket.Controllers{
 			var entity = userRepository.GetById(id);
 			userRepository.Delete(entity);
 			
-			return RedirecToAction("Index");
+			return RedirectToAction("Index");
+
+
 		}
-		
-	}
+
+        [HttpGet]
+        //[AdminRequired]
+        public ActionResult Activate(int id)
+        {
+            var userRepository = new UserRepository();
+            User entity = userRepository.GetById(id);
+
+            entity.IsActive = true;
+
+            userRepository.Update(entity);
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        //[AdminRequired]
+        public ActionResult MakeAdmin(int id)
+        {
+            var userRepository = new UserRepository();
+            User entity = userRepository.GetById(id);
+
+            entity.AccessRights = AccessRightsEnum.Admin;
+
+            userRepository.Update(entity);
+
+            return RedirectToAction("Index");
+        }
+
+    }
 }

@@ -1,0 +1,77 @@
+﻿@using ProductSupermarket.Enums;
+@using ProductSupermarket.Entities;
+@model IEnumerable<ProductSupermarket.Entities.User>
+
+@{
+    ViewBag.Title = "View";
+}
+
+<h2>View</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedAt)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastUpdateAt)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Username)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Password)
+        </th>
+        <th>
+            Access Rights
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedAt)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastUpdateAt)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Username)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Password)
+        </td>
+            @switch (item.AccessRights)
+            {
+                case AccessRightsEnum.NormalUser:
+                    <td>Normal User</td>
+                    break;
+                case AccessRightsEnum.Admin:
+                    <td>Admin</td>
+                    break;
+                case AccessRightsEnum.SuperAdmin:
+                    <td>Super Admin</td>
+                    break;
+                default:
+                    break;
+            }
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+        <td>
+            @Html.ActionLink("Activate", "Activate", new { id = item.Id }) |
+            @Html.ActionLink("Make Admin", "MakeAdmin", new { id = item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id }) 
+        </td>
+    </tr>
+    }
+
+</table>
