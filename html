@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+
+	<style type="text/css">
+		table {
+			font-size: 30px;
+		}
+
+		thead {
+			font-weight: bold;
+		}
+
+		td {
+			border: 1px solid black;
+		}
+
+		.error {
+			color: red;
+			border: none;
+		}
+
+		p {
+			display: inline;
+		}
+
+		button {
+			width: 100px;
+			height: 40px;
+		}
+	</style>
+</head>
+<body>
+
+	<table>
+		<thead>
+			<tr>
+				<td>Продукт</td>
+				<td>Количество</td>
+				<td>Купи</td>
+			</tr>
+		</thead>
+
+		<tbody>
+			<tr>
+				<td>Ябълки</td>
+				<td id="appleCount">10</td>
+				<td><button id="appleBuy">Купи</button></td>
+				<td class="error" id="appMessage"></td>
+			</tr>
+			<tr>
+				<td>Круши</td>
+				<td id="pearCount">20</td>
+				<td><button id="pearBuy">Купи</button></td>
+				<td class="error" id="pearMessage"></td>
+			</tr>
+			<tr>
+				<td>Череши</td>
+				<td id="cherCount">30</td>
+				<td><button id="cherBuy">Купи</button></td>
+				<td class="error" id="cherMessage"></td>
+			</tr>
+		</tbody>
+	</table>
+
+	<script type="text/javascript">
+		
+		var appleCount = document.querySelector("#appleCount");
+		var pearCount = document.querySelector("#pearCount");
+		var cherCount = document.querySelector("#cherCount");
+
+		document.querySelector("#appleBuy").onclick = function() {
+			appleCount.innerHTML--;
+			if (appleCount.innerHTML == "0") {
+				document.querySelector("#appleBuy").onclick = function() {}
+				document.querySelector("#appMessage").innerHTML = "Cant buy more apples!";
+			}
+		}
+
+		document.querySelector("#pearBuy").onclick = function() {
+			pearCount.innerHTML--;
+			if (pearCount.innerHTML == "0") {
+				document.querySelector("#pearBuy").onclick = function() {}
+				document.querySelector("#pearMessage").innerHTML = "Cant buy more pears!";
+			}
+		}
+
+		document.querySelector("#cherBuy").onclick = function() {
+			cherCount.innerHTML--;
+			if (cherCount.innerHTML == "0") {
+				document.querySelector("#cherBuy").onclick = function() {}
+				document.querySelector("#cherMessage").innerHTML = "Cant buy more apples!";
+			}
+		}
+	</script>
+
+</body>
+</html>
